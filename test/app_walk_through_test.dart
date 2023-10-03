@@ -1,29 +1,41 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:app_walk_through/app_walk_through.dart';
-import 'package:app_walk_through/app_walk_through_platform_interface.dart';
-import 'package:app_walk_through/app_walk_through_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-class MockAppWalkThroughPlatform
-    with MockPlatformInterfaceMixin
-    implements AppWalkThroughPlatform {
-
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
-}
+import 'image_resource.dart';
+import 'my_widget_tester.dart';
 
 void main() {
-  final AppWalkThroughPlatform initialPlatform = AppWalkThroughPlatform.instance;
-
-  test('$MethodChannelAppWalkThrough is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelAppWalkThrough>());
+  late List<AppWalkThroughDataModel> models;
+  setUp(() {
+    models = [
+      AppWalkThroughDataModel(title: "Sit and Relax", description: "have a sit and relax for your future Goals.",image: ImageResouce.android2),
+      AppWalkThroughDataModel(title: "LeaderBoard", description: "Leaderboard is the way to know your client behaviour.",image: ImageResouce.android3),
+      AppWalkThroughDataModel(title: "Build your own blocks", description: "Buid you own block or path to success.",image: ImageResouce.android3)
+    ];
   });
 
-  test('getPlatformVersion', () async {
-    AppWalkThrough appWalkThroughPlugin = AppWalkThrough();
-    MockAppWalkThroughPlatform fakePlatform = MockAppWalkThroughPlatform();
-    AppWalkThroughPlatform.instance = fakePlatform;
+  testWidgets("should have forward IconButton", (widgetTester) async {
+    await widgetTester.pumpWidget(MyWidgetTester(widget: AppWalkThrough(models: models, onNextButtonPressed: (){}, onSkipButtonPressed: (){})));
+    final buttonFinder = find.byType(IconButton);
+    expect(buttonFinder, findsOneWidget);
+    final iconFinder = find.byIcon(Icons.arrow_forward);
+    expect(iconFinder, findsOneWidget);
+  });
 
-    expect(await appWalkThroughPlugin.getPlatformVersion(), '42');
+  testWidgets("should have skip textButton", (widgetTester) async {
+    await widgetTester.pumpWidget(MyWidgetTester(widget: AppWalkThrough(models: models, onNextButtonPressed: (){}, onSkipButtonPressed: (){})));
+    final buttonFinder = find.byType(TextButton);
+    expect(buttonFinder, findsOneWidget);
+    final textFinder = find.text("Skip");
+    expect(textFinder, findsOneWidget);
+  });
+
+  testWidgets("should have pageView widget", (widgetTester) async {
+    await widgetTester.pumpWidget(MyWidgetTester(widget: AppWalkThrough(models: models, onNextButtonPressed: (){}, onSkipButtonPressed: (){})));
+    final buttonFinder = find.byType(PageView);
+    expect(buttonFinder, findsOneWidget);
   });
 }
+
+
