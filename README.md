@@ -1,15 +1,20 @@
 # app_walk_through
 
-A new Flutter plugin project.
+A new Flutter plugin plugins for application walk through.
 
 ## Getting Started
+### clone project 
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+```cmd
+git clone https://github.com/presswink/app_walk_through.git
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 
+## package demo
+![TouchRippleEffect](./screenshots/video.gif)
+
+
+
+## contributor
+
+@Adityapanther
