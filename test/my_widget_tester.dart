@@ -9,10 +9,7 @@ class MyWidgetTester extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         persistentFooterAlignment: AlignmentDirectional.center,
-        body: Container(
-          alignment: Alignment.center,
-          child: widget
-        ),
+        body: Container(alignment: Alignment.center, child: widget),
       ),
     );
   }

@@ -1,6 +1,6 @@
 name: app_walk_through
-description: A app walk through modules.
-version: 0.0.1
+description: A app walk through library to define or showcase app features to the users.
+version: 0.0.2
 homepage: https://github.com/presswink/app_walk_through
 
 environment:

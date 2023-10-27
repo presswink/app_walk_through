@@ -1,17 +1,27 @@
-
-
 import 'package:app_walk_through/src/app_walk_through_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 export './src/app_walk_through_data_model.dart';
 
+/// this is app walk through widget. using this you can define your app short description and user will be able to get your app idea and feature.
+/// [models] is a set of list in which you will have your app features & short description with text and images.
+/// with the [onNextButtonPressed] you will be able to move on next activity or screen after the slide finish.
+/// [onSkipButtonPressed] you will be able to move on next activity or screen without app walk through slide.
+/// [titleStyle] is a text style for title which is visible on the app walk through slide.
+/// [descriptionStyle] is a text style for title which is visible on the app walk through slide.
+/// with the [nextButtonColor] you will be able to change next button icon colors.
+/// you can also change or define skip button text style with [skipButtonStyle]
+///
 class AppWalkThrough extends StatefulWidget {
   final List<AppWalkThroughDataModel> models;
   final void Function() onNextButtonPressed;
   final void Function() onSkipButtonPressed;
   final TextStyle? titleStyle;
   final TextStyle? descriptionStyle;
+  final Color? nextButtonColor;
+  final TextStyle? skipButtonStyle;
+
   const AppWalkThrough({
     super.key,
     required this.models,
@@ -19,6 +29,8 @@ class AppWalkThrough extends StatefulWidget {
     required this.onSkipButtonPressed,
     this.titleStyle,
     this.descriptionStyle,
+    this.nextButtonColor,
+    this.skipButtonStyle,
   });
 
   @override
@@ -50,6 +62,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
     super.initState();
   }
 
+  /// will build the list of dot indicators
   void _buildList() {
     _indicatorList.clear();
     widget.models.asMap().forEach((int index, _) {
@@ -59,6 +72,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
     });
   }
 
+  /// [index] of the slides
   void _pageHandler(int index) {
     _currentPage = index;
     _buildList();
@@ -92,11 +106,12 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   widget.models[index].title!,
-                                  style: widget.titleStyle ?? GoogleFonts.notoSans(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 0.5),
+                                  style: widget.titleStyle ??
+                                      GoogleFonts.notoSans(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 0.5),
                                 ))),
                         Expanded(flex: 10, child: Container()),
                         Expanded(
@@ -108,14 +123,16 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                               Expanded(
                                 child: Container(
                                     margin: const EdgeInsets.only(bottom: 20),
-                                    padding: const EdgeInsets.only(left: 20, right: 20),
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 20),
                                     child: Text(
                                       widget.models[index].description!,
-                                      style: widget.descriptionStyle ?? GoogleFonts.notoSans(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey,
-                                      ),
+                                      style: widget.descriptionStyle ??
+                                          GoogleFonts.notoSans(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.grey,
+                                          ),
                                       textAlign: TextAlign.center,
                                     )),
                               ),
@@ -141,10 +158,11 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                           onPressed: widget.onSkipButtonPressed,
                           child: Text(
                             "Skip",
-                            style: GoogleFonts.notoSans(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
+                            style: widget.skipButtonStyle ??
+                                GoogleFonts.notoSans(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
                           ))),
                   Expanded(
                       flex: 4,
@@ -157,7 +175,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                     child: IconButton(
                         iconSize: 36.0,
                         onPressed: () {
-                          if (_currentPage < widget.models.length -1) {
+                          if (_currentPage < widget.models.length - 1) {
                             int nextIndex = _currentPage + 1;
                             _pageController.animateToPage(nextIndex,
                                 duration: const Duration(milliseconds: 300),
@@ -167,9 +185,9 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                             widget.onNextButtonPressed();
                           }
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.arrow_forward,
-                          color: Colors.white,
+                          color: widget.nextButtonColor ?? Colors.white,
                         )),
                   )
                 ],
