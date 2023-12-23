@@ -11,10 +11,10 @@ git clone https://github.com/presswink/app_walk_through.git
 
 
 ## package demo
-![TouchRippleEffect](./screenshots/video.gif)
 
+<img src="./screenshots/video.gif" width="250" height="500" alt="SearchField screenshot">
 
 
 ## contributor
 
-@Adityapanther
+![@Aditya panther](https://github.com/Adityapanther/)
