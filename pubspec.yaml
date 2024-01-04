@@ -1,6 +1,6 @@
 name: app_walk_through
 description: A app walk through library to define or showcase app features to the users.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/presswink/app_walk_through
 
 environment:
@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
+  touch_ripple_effect: ^2.3.0
 
 dev_dependencies:
   flutter_test:
