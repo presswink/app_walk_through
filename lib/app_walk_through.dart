@@ -1,6 +1,7 @@
 import 'package:app_walk_through/src/app_walk_through_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:touch_ripple_effect/touch_ripple_effect.dart';
 
 export './src/app_walk_through_data_model.dart';
 
@@ -38,44 +39,45 @@ class AppWalkThrough extends StatefulWidget {
 }
 
 class _AppWalkThroughState extends State<AppWalkThrough> {
-  final List<Widget> _indicatorList = [];
   final _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
-  Widget _dotIndicator(int index, int cp) {
-    return Container(
-      margin: const EdgeInsets.only(left: 3, right: 3),
-      width: 12,
-      height: 12,
-      child: null,
-      decoration: BoxDecoration(
-        color: index == cp ? Colors.white : Colors.grey,
-        border: Border.all(color: Colors.grey, width: 1),
-        shape: BoxShape.circle,
+  /// [index] of the slides
+  void _pageHandler(int index) {
+    setState(() {
+      _currentPage = index;
+    });
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  }
+
+  Widget _dotIndicator(int index) {
+    return TouchRippleEffect(
+      rippleColor: Colors.transparent,
+      onTap: (){
+        _pageHandler(index);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(left: 3, right: 3),
+        width: 12,
+        height: 12,
+        child: null,
+        decoration: BoxDecoration(
+          color: index == _currentPage ? Colors.white : Colors.grey,
+          border: Border.all(color: Colors.grey, width: 1),
+          shape: BoxShape.circle,
+        ),
       ),
     );
   }
 
-  @override
-  void initState() {
-    _buildList();
-    super.initState();
-  }
 
   /// will build the list of dot indicators
-  void _buildList() {
-    _indicatorList.clear();
-    widget.models.asMap().forEach((int index, _) {
-      setState(() {
-        _indicatorList.add(_dotIndicator(index, _currentPage));
-      });
+  List<Widget> _buildList() {
+    List<Widget> indicatorList = [];
+    widget.models.asMap().forEach((index, value) {
+      indicatorList.add(_dotIndicator(index));
     });
-  }
-
-  /// [index] of the slides
-  void _pageHandler(int index) {
-    _currentPage = index;
-    _buildList();
+    return indicatorList;
   }
 
   @override
@@ -85,7 +87,11 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
         fit: StackFit.expand,
         children: [
           PageView.builder(
-              onPageChanged: _pageHandler,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
               controller: _pageController,
               itemCount: widget.models.length,
               itemBuilder: (BuildContext context, int index) {
@@ -98,6 +104,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      textDirection: TextDirection.ltr,
                       children: [
                         Expanded(
                             flex: 2,
@@ -149,46 +156,56 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
             child: Container(
               padding: const EdgeInsets.only(left: 20, right: 20),
               margin: const EdgeInsets.only(bottom: 20),
+              height: 40,
+              alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                textDirection: TextDirection.ltr,
                 children: [
                   Expanded(
-                      child: TextButton(
-                          onPressed: widget.onSkipButtonPressed,
-                          child: Text(
-                            "Skip",
-                            style: widget.skipButtonStyle ??
-                                GoogleFonts.notoSans(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white),
-                          ))),
-                  Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: _indicatorList,
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: TextButton(
+                            onPressed: widget.onSkipButtonPressed,
+                            child: Text(
+                              "Skip",
+                              style: widget.skipButtonStyle ??
+                                  GoogleFonts.notoSans(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                            )),
                       )),
                   Expanded(
-                    child: IconButton(
-                        iconSize: 36.0,
-                        onPressed: () {
-                          if (_currentPage < widget.models.length - 1) {
-                            int nextIndex = _currentPage + 1;
-                            _pageController.animateToPage(nextIndex,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut);
-                            _pageHandler(nextIndex);
-                          } else {
-                            widget.onNextButtonPressed();
-                          }
-                        },
-                        icon: Icon(
-                          Icons.arrow_forward,
-                          color: widget.nextButtonColor ?? Colors.white,
-                        )),
+                      flex: 4,
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          textDirection: TextDirection.ltr,
+                          children: _buildList(),
+                        ),
+                      )),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: IconButton(
+                          iconSize: 36.0,
+                          onPressed: () {
+                            if (_currentPage < widget.models.length - 1) {
+                              int nextIndex = _currentPage + 1;
+                              _pageHandler(nextIndex);
+                            } else {
+                              widget.onNextButtonPressed();
+                            }
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward,
+                            color: widget.nextButtonColor ?? Colors.white,
+                          )),
+                    ),
                   )
                 ],
               ),
