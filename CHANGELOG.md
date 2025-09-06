@@ -7,3 +7,6 @@
 ## 0.0.3
 * code improved
 * admob policy issue fixed
+
+## 1.0.0
+* migrated from plugins to packages
