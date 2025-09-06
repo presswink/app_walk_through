@@ -1,9 +1,18 @@
-import 'package:app_walk_through/src/app_walk_through_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:touch_ripple_effect/touch_ripple_effect.dart';
 
-export './src/app_walk_through_data_model.dart';
+/// this is appWalkThrough data model which will be helpful to define app short descriptions.
+/// assign appWalkThrough item [title] text,
+/// assign appWalkThrough item [description] text &
+/// assign assets [image] string of appWalkThrough item
+class AppWalkThroughDataModel {
+  String? title;
+  String? description;
+  String? image;
+  AppWalkThroughDataModel({this.title, this.description, this.image});
+}
+
 
 /// this is app walk through widget. using this you can define your app short description and user will be able to get your app idea and feature.
 /// [models] is a set of list in which you will have your app features & short description with text and images.
@@ -13,7 +22,7 @@ export './src/app_walk_through_data_model.dart';
 /// [descriptionStyle] is a text style for title which is visible on the app walk through slide.
 /// with the [nextButtonColor] you will be able to change next button icon colors.
 /// you can also change or define skip button text style with [skipButtonStyle]
-///
+
 class AppWalkThrough extends StatefulWidget {
   final List<AppWalkThroughDataModel> models;
   final void Function() onNextButtonPressed;
@@ -85,8 +94,10 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
     return Stack(
         alignment: AlignmentDirectional.topStart,
         fit: StackFit.expand,
+        textDirection: TextDirection.ltr,
         children: [
           PageView.builder(
+            scrollDirection: Axis.horizontal,
               onPageChanged: (index) {
                 setState(() {
                   _currentPage = index;
@@ -99,7 +110,8 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(widget.models[index].image!),
-                          fit: BoxFit.fill)),
+                          fit: BoxFit.fill)
+                  ),
                   child: SafeArea(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,6 +125,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   widget.models[index].title!,
+                                  textDirection: TextDirection.ltr,
                                   style: widget.titleStyle ??
                                       GoogleFonts.notoSans(
                                           color: Colors.white,
@@ -126,6 +139,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            textDirection: TextDirection.ltr,
                             children: [
                               Expanded(
                                 child: Container(
@@ -134,6 +148,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                                         left: 20, right: 20),
                                     child: Text(
                                       widget.models[index].description!,
+                                      textDirection: TextDirection.ltr,
                                       style: widget.descriptionStyle ??
                                           GoogleFonts.notoSans(
                                             fontSize: 18,
@@ -166,10 +181,12 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                   Expanded(
                       child: Container(
                         alignment: Alignment.center,
+
                         child: TextButton(
                             onPressed: widget.onSkipButtonPressed,
                             child: Text(
                               "Skip",
+                              textDirection: TextDirection.ltr,
                               style: widget.skipButtonStyle ??
                                   GoogleFonts.notoSans(
                                       fontSize: 18,
@@ -192,6 +209,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                     child: Container(
                       alignment: Alignment.center,
                       child: IconButton(
+                        alignment: Alignment.center,
                           iconSize: 36.0,
                           onPressed: () {
                             if (_currentPage < widget.models.length - 1) {
@@ -204,6 +222,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                           icon: Icon(
                             Icons.arrow_forward,
                             color: widget.nextButtonColor ?? Colors.white,
+                            textDirection: TextDirection.ltr,
                           )),
                     ),
                   )
@@ -214,3 +233,4 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
         ]);
   }
 }
+
