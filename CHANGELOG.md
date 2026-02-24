@@ -1,3 +1,7 @@
+## 1.0.2
+
+- package dependency issue fixed
+
 ## 1.0.1
 
 - packages upgraded
