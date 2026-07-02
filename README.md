@@ -10,7 +10,7 @@ Add `app_walk_through` as a dependency in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  app_walk_through: ^1.0.2
+  app_walk_through: ^1.0.4
 ```
 
 ### Usage
@@ -42,6 +42,20 @@ AppWalkThrough(
   },
 )
 ```
+
+## Features and Customization
+
+The `AppWalkThrough` widget provides several properties for customization:
+
+| Property              | Description                                                                        |
+|:----------------------|:-----------------------------------------------------------------------------------|
+| `models`              | List of `AppWalkThroughDataModel` containing title, description, and image assets. |
+| `onNextButtonPressed` | Callback triggered after the last slide's next button is pressed.                  |
+| `onSkipButtonPressed` | Callback triggered when the skip button is pressed.                                |
+| `titleStyle`          | `TextStyle` for the slide titles.                                                  |
+| `descriptionStyle`    | `TextStyle` for the slide descriptions.                                            |
+| `nextButtonColor`     | `Color` for the forward arrow icon.                                                |
+| `skipButtonStyle`     | `TextStyle` for the skip button text.                                              |
 
 ## package demo
 
