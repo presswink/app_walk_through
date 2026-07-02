@@ -1,6 +1,6 @@
 name: app_walk_through
 description: A app walk through library to define or showcase app features to the users.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/presswink/app_walk_through
 
 environment:
@@ -24,9 +24,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   # To add assets to your package, add an assets section, like this:
-  assets:
-    - assets/images/img1.jpg
-#     - images/a_dot_ham.jpeg
+#  assets:
 
 # For details regarding assets in packages, see
 # https://flutter.dev/to/asset-from-package
