@@ -1,3 +1,8 @@
+## 1.0.3
+
+- added example project
+- updated README.md
+
 ## 1.0.2
 
 - package dependency issue fixed
