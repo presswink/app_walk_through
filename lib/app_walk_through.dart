@@ -1,36 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:touch_ripple_effect/touch_ripple_effect.dart';
 
-/// this is appWalkThrough data model which will be helpful to define app short descriptions.
-/// assign appWalkThrough item [title] text,
-/// assign appWalkThrough item [description] text &
-/// assign assets [image] string of appWalkThrough item
+/// This is the [AppWalkThrough] data model which helps define app short descriptions.
+///
+/// It contains the content for each slide in the walkthrough.
 class AppWalkThroughDataModel {
+  /// The title text shown at the top of the slide.
   String? title;
+
+  /// The description text shown at the bottom of the slide.
   String? description;
+
+  /// The asset path for the background image of the slide.
   String? image;
+
+  /// Creates a data model for a single walkthrough slide.
   AppWalkThroughDataModel({this.title, this.description, this.image});
 }
 
-/// this is app walk through widget. using this you can define your app short description and user will be able to get your app idea and feature.
-/// [models] is a set of list in which you will have your app features & short description with text and images.
-/// with the [onNextButtonPressed] you will be able to move on next activity or screen after the slide finish.
-/// [onSkipButtonPressed] you will be able to move on next activity or screen without app walk through slide.
-/// [titleStyle] is a text style for title which is visible on the app walk through slide.
-/// [descriptionStyle] is a text style for title which is visible on the app walk through slide.
-/// with the [nextButtonColor] you will be able to change next button icon colors.
-/// you can also change or define skip button text style with [skipButtonStyle]
-
+/// A widget that provides a walkthrough/onboarding experience for your app.
+///
+/// Use this widget to showcase your app's features and main idea to the user.
+/// It displays a series of slides with images, titles, and descriptions,
+/// including a dot indicator and navigation buttons.
 class AppWalkThrough extends StatefulWidget {
+  /// A list of [AppWalkThroughDataModel] containing the features and descriptions to display.
   final List<AppWalkThroughDataModel> models;
+
+  /// Callback function triggered when the "Next" button is pressed on the last slide.
+  /// This is typically used to navigate to the main screen of the app.
   final void Function() onNextButtonPressed;
+
+  /// Callback function triggered when the "Skip" button is pressed.
+  /// This allows the user to bypass the walkthrough entirely.
   final void Function() onSkipButtonPressed;
+
+  /// Optional [TextStyle] for the title text on each slide.
   final TextStyle? titleStyle;
+
+  /// Optional [TextStyle] for the description text on each slide.
   final TextStyle? descriptionStyle;
+
+  /// Optional [Color] for the next button icon. Defaults to [Colors.white].
   final Color? nextButtonColor;
+
+  /// Optional [TextStyle] for the "Skip" button text.
   final TextStyle? skipButtonStyle;
 
+  /// Creates an [AppWalkThrough] widget.
   const AppWalkThrough({
     super.key,
     required this.models,
@@ -131,7 +148,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                           textDirection: TextDirection.ltr,
                           style:
                               widget.titleStyle ??
-                              GoogleFonts.notoSans(
+                              TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -160,7 +177,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                                 textDirection: TextDirection.ltr,
                                 style:
                                     widget.descriptionStyle ??
-                                    GoogleFonts.notoSans(
+                                    TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.grey,
@@ -201,7 +218,7 @@ class _AppWalkThroughState extends State<AppWalkThrough> {
                         textDirection: TextDirection.ltr,
                         style:
                             widget.skipButtonStyle ??
-                            GoogleFonts.notoSans(
+                            TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: Colors.white,

@@ -1,9 +1,10 @@
+## 1.0.4
+
+- added detailed README.md sections
+- improved DartDoc comments for the entire library
+- performance issue fixed
+
 ## 1.0.3
-
-- added example project
-- updated README.md
-
-## 1.0.2
 
 - package dependency issue fixed
 
